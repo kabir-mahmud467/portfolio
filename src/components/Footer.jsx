@@ -9,9 +9,9 @@ const Footer = () => {
   }
 
   const socialLinks = [
-    { icon: <FiGithub />, href: 'https://github.com/yourusername', label: 'GitHub' },
-    { icon: <FiLinkedin />, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
-    { icon: <FiMail />, href: 'mailto:your.email@example.com', label: 'Email' },
+    { icon: <FiGithub />, href: 'https://github.com/kabir-mahmud467', label: 'GitHub' },
+    { icon: <FiLinkedin />, href: 'https://linkedin.com/in/kabirmahmud467', label: 'LinkedIn' },
+    { icon: <FiMail />, href: 'mailto:kabirmahmud467@gmail.com', label: 'Email' },
   ]
 
   return (

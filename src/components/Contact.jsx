@@ -33,19 +33,19 @@ const Contact = () => {
     {
       icon: <FiMail />,
       label: 'Email',
-      value: 'your.email@example.com',
-      href: 'mailto:your.email@example.com',
+      value: 'kabirmahmud467@gmail.com',
+      href: 'mailto:kabirmahmud467@gmail.com',
     },
     {
       icon: <FiPhone />,
       label: 'Phone',
-      value: '+1 (234) 567-8900',
-      href: 'tel:+12345678900',
+      value: '+8801949926897',
+      href: 'tel:+8801949926897',
     },
     {
       icon: <FiMapPin />,
       label: 'Location',
-      value: 'Your City, Country',
+      value: 'Rupganj, Narayanganj, Bangladesh',
       href: '#',
     },
   ]
