@@ -132,15 +132,19 @@ function Layout() {
 // Main App component with Router
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="projects" element={<Projects />} />
-          {/* Add more routes as needed */}
-        </Route>
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="projects" element={<Projects />} />
+            {/* Add more routes as needed */}
+          </Route>
+        </Routes>
+      </Router>
+      <Analytics />
+      <SpeedInsights />
+    </>
   );
 }
