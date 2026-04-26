@@ -208,9 +208,159 @@ function initTypewriters() {
   });
 }
 
+function initTerminalAutotypes() {
+  const nodes = document.querySelectorAll('[data-terminal-autotype]');
+  if (!nodes.length) return;
+
+  const sleep = (ms) => new Promise((r) => window.setTimeout(r, ms));
+
+  const defaultScript = [
+    { t: 'cmd', v: 'ping kabir@voidnet.local', note: '# handshake request' },
+    { t: 'out', v: '64 bytes from voidnet.local: ttl=64 time=3.2ms' },
+    { t: 'cmd', v: 'trace-route --secure api-gateway', note: '# path integrity' },
+    { t: 'out', v: 'route locked: dhaka -> frankfurt -> global edge' },
+    { t: 'cmd', v: 'decrypt ./telemetry.bin --key=ENV', note: '# signal decode' },
+    { t: 'out', v: 'telemetry: OK | anomalies: 0 | drift: 0.02%' },
+    { t: 'cmd', v: 'audit --scope=auth --mode=strict', note: '# surface reduction' },
+    { t: 'out', v: 'surface: minimized | rate-limit: armed | csrf: ok' },
+    { t: 'cmd', v: 'render --luminous-ui --fps=stable', note: '# interface bloom' },
+    { t: 'out', v: 'shader compile: ok | bloom: engaged | latency: 8ms' },
+    { t: 'cmd', v: 'tail -n 3 ./signals.log', note: '# listen' },
+    { t: 'out', v: '[VOID] signal clean' },
+    { t: 'out', v: '[VOID] standing by' },
+  ];
+
+  const safeJsonParseLocal = (value, fallback) => safeJsonParse(value, fallback);
+
+  nodes.forEach((node) => {
+    const output = node.querySelector('[data-terminal-autotype-output]') || node;
+    const loop = node.getAttribute('data-terminal-loop') !== 'false';
+    const speed = Math.max(10, Number(node.getAttribute('data-terminal-speed') || '18'));
+
+    const script = (() => {
+      const raw = node.getAttribute('data-terminal-lines');
+      if (!raw) return defaultScript;
+      const parsed = safeJsonParseLocal(raw, null);
+      return Array.isArray(parsed) && parsed.length ? parsed : defaultScript;
+    })();
+
+    const clear = () => {
+      while (output.firstChild) output.removeChild(output.firstChild);
+    };
+
+    const makeLine = () => {
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      return line;
+    };
+
+    const addSpan = (line, text, className) => {
+      const span = document.createElement('span');
+      if (className) span.className = className;
+      span.textContent = text;
+      line.appendChild(span);
+      return span;
+    };
+
+    const addCursor = (line) => {
+      const cursor = document.createElement('span');
+      cursor.className = 'terminal-cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+      line.appendChild(cursor);
+      return cursor;
+    };
+
+    const scrollBottom = () => {
+      try {
+        node.scrollTop = node.scrollHeight;
+      } catch {
+        // ignore
+      }
+    };
+
+    const renderStatic = () => {
+      clear();
+      for (let i = 0; i < script.length; i++) {
+        const step = script[i] || {};
+        const line = makeLine();
+        if (step.t === 'cmd') {
+          addSpan(line, '>', 'terminal-prompt');
+          addSpan(line, ` ${String(step.v || '')}`, '');
+          if (step.note) addSpan(line, ` ${String(step.note)}`, 'terminal-muted');
+        } else {
+          addSpan(line, String(step.v || ''), '');
+        }
+        output.appendChild(line);
+      }
+      scrollBottom();
+    };
+
+    if (prefersReducedMotion) {
+      renderStatic();
+      return;
+    }
+
+    const schedule =
+      window.requestIdleCallback ||
+      ((cb) => window.setTimeout(() => cb({ timeRemaining: () => 0 }), 120));
+
+    schedule(async () => {
+      let cancelled = false;
+      const onHide = () => {
+        cancelled = document.visibilityState !== 'visible';
+      };
+      document.addEventListener('visibilitychange', onHide, { passive: true });
+
+      const runOnce = async () => {
+        clear();
+        for (let i = 0; i < script.length; i++) {
+          if (cancelled) {
+            await sleep(320);
+            i--;
+            continue;
+          }
+
+          const step = script[i] || {};
+          const line = makeLine();
+          output.appendChild(line);
+
+          if (step.t === 'cmd') {
+            addSpan(line, '>', 'terminal-prompt');
+            const text = String(step.v || '');
+            const typed = addSpan(line, ' ', '');
+            const cursor = addCursor(line);
+
+            for (let c = 0; c < text.length; c++) {
+              if (cancelled) break;
+              typed.textContent = ` ${text.slice(0, c + 1)}`;
+              scrollBottom();
+              await sleep(speed + Math.random() * 22);
+            }
+
+            cursor.remove();
+            if (step.note) addSpan(line, ` ${String(step.note)}`, 'terminal-muted');
+            scrollBottom();
+            await sleep(220 + Math.random() * 260);
+          } else {
+            const out = String(step.v || '');
+            addSpan(line, out, '');
+            scrollBottom();
+            await sleep(150 + Math.random() * 220);
+          }
+        }
+      };
+
+      while (true) {
+        await runOnce();
+        if (!loop) break;
+        await sleep(900 + Math.random() * 800);
+      }
+    });
+  });
+}
+
 function initProfilePhotoModule() {
-  const KEY = 'km_profile_photo_v1';
-  const DEFAULT_SRC = '/profile.jpg';
+  const DEFAULT_SRC = '/profile.jpeg';
 
   const targets = Array.from(document.querySelectorAll('[data-profile-photo-img]'));
   if (!targets.length) return;
@@ -227,9 +377,8 @@ function initProfilePhotoModule() {
     if (fallback) fallback.style.display = '';
   };
 
-  const setImg = (img, fallback, src) => {
-    if (!src) return setFallback(img, fallback);
-
+  targets.forEach((img) => {
+    const fallback = getFallback(img);
     img.dataset.hasPhoto = 'pending';
     if (fallback) fallback.style.display = '';
 
@@ -250,85 +399,7 @@ function initProfilePhotoModule() {
       { once: true },
     );
 
-    img.src = src;
-  };
-
-  const applyToAll = (src) => {
-    targets.forEach((img) => setImg(img, getFallback(img), src));
-  };
-
-  const applyFromStorageOrDefault = () => {
-    const fromStorage = localStorage.getItem(KEY);
-    if (fromStorage) applyToAll(fromStorage);
-    else applyToAll(DEFAULT_SRC);
-  };
-
-  applyFromStorageOrDefault();
-
-  async function compressToDataUrl(file) {
-    const maxBytes = 1_200_000; // ~1.2MB hard-stop to avoid storage issues
-    if (file.size > 8_000_000) throw new Error('File too large');
-
-    const imgEl = document.createElement('img');
-    const objectUrl = URL.createObjectURL(file);
-    try {
-      await new Promise((resolve, reject) => {
-        imgEl.onload = resolve;
-        imgEl.onerror = reject;
-        imgEl.src = objectUrl;
-      });
-
-      const maxDim = 512;
-      const scale = Math.min(maxDim / imgEl.naturalWidth, maxDim / imgEl.naturalHeight, 1);
-      const w = Math.max(1, Math.round(imgEl.naturalWidth * scale));
-      const h = Math.max(1, Math.round(imgEl.naturalHeight * scale));
-
-      const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d', { alpha: false });
-      if (!ctx) throw new Error('No canvas');
-      ctx.drawImage(imgEl, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.84);
-      if (dataUrl.length > maxBytes * 1.37) {
-        // dataURL overhead ~37% vs bytes; rough guard.
-        throw new Error('Compressed image still too large');
-      }
-      return dataUrl;
-    } finally {
-      URL.revokeObjectURL(objectUrl);
-    }
-  }
-
-  const inputs = Array.from(document.querySelectorAll('[data-profile-photo-input]'));
-  inputs.forEach((input) => {
-    input.addEventListener('change', async () => {
-      const file = input.files && input.files[0];
-      if (!file) return;
-      try {
-        const dataUrl = await compressToDataUrl(file);
-        localStorage.setItem(KEY, dataUrl);
-        applyToAll(dataUrl);
-      } catch {
-        // ignore: keep existing photo
-      } finally {
-        inputs.forEach((el) => {
-          try {
-            el.value = '';
-          } catch {
-            // ignore
-          }
-        });
-      }
-    });
-  });
-
-  const clearButtons = Array.from(document.querySelectorAll('[data-profile-photo-clear]'));
-  clearButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      localStorage.removeItem(KEY);
-      applyToAll(DEFAULT_SRC);
-    });
+    img.src = DEFAULT_SRC;
   });
 }
 
@@ -396,6 +467,7 @@ function initMobileMenuDrawer() {
 function init() {
   initSparkles();
   initTypewriters();
+  initTerminalAutotypes();
   initMobileMenuDrawer();
   initProfilePhotoModule();
 }

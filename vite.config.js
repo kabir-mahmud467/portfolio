@@ -15,6 +15,7 @@ export default defineConfig({
         home: resolve(__dirname, 'index.html'),
         projects: resolve(__dirname, 'projects.html'),
         about: resolve(__dirname, 'about.html'),
+        social: resolve(__dirname, 'social.html'),
         resume: resolve(__dirname, 'resume.html'),
         contact: resolve(__dirname, 'contact.html'),
       },

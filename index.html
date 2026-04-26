@@ -50,6 +50,7 @@
   </head>
   <body class="antialiased">
     <div class="grid-overlay"></div>
+    <div class="grain-overlay"></div>
     <div class="crt-overlay"></div>
     <div class="scanline-overlay"></div>
 
@@ -61,7 +62,7 @@
       <nav class="frost-nav terminal-glow border-b border-white/10">
         <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 md:grid md:grid-cols-3 md:items-center">
           <a href="/" class="group inline-flex items-center gap-3 md:justify-self-start">
-            <span class="relative grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5">
+            <span class="relative hidden h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 sm:grid">
               <span class="absolute -inset-2 rounded-2xl bg-bioCyan/10 blur-xl opacity-0 transition-opacity group-hover:opacity-100"></span>
               <span class="absolute inset-0 overflow-hidden rounded-xl">
                 <img data-profile-photo-img alt="" class="h-full w-full object-cover" decoding="async" loading="lazy" />
@@ -72,11 +73,12 @@
           </a>
 
           <div class="hidden md:col-start-2 md:flex items-center justify-center gap-7 text-[11px] font-semibold tracking-[0.22em] text-white/60 md:justify-self-center">
-            <a aria-current="page" href="/" class="text-bioCyan">HOME</a>
-            <a href="/projects" class="hover:text-bioCyan transition-colors">DATA_REPOSITORIES</a>
-            <a href="/about" class="hover:text-bioCyan transition-colors">CORE_DIRECTIVES</a>
-            <a href="/resume" class="hover:text-bioCyan transition-colors">RESUME</a>
-            <a href="/contact" class="hover:text-bioCyan transition-colors">NEURAL_LINK</a>
+            <a aria-current="page" href="/" class="nav-link">HOME</a>
+            <a href="/projects" class="nav-link">DATA_REPOSITORIES</a>
+            <a href="/about" class="nav-link">CORE_DIRECTIVES</a>
+            <a href="/social" class="nav-link">SOCIAL</a>
+            <a href="/resume" class="nav-link">RESUME</a>
+            <a href="/contact" class="nav-link">NEURAL_LINK</a>
           </div>
 
           <div class="flex items-center justify-end gap-2 md:col-start-3 md:justify-self-end">
@@ -115,12 +117,7 @@
       <div class="relative flex h-full flex-col">
         <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <div class="flex items-center gap-3">
-            <div class="relative h-10 w-10 rounded-xl border border-white/10 bg-white/5">
-              <div class="absolute inset-0 overflow-hidden rounded-xl">
-                <img data-profile-photo-img alt="" class="h-full w-full object-cover" decoding="async" loading="lazy" />
-                <div class="absolute inset-0 grid place-items-center font-mono text-[10px] font-bold tracking-[0.3em] text-bioCyan" data-profile-photo-fallback>KM</div>
-              </div>
-            </div>
+            <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 font-mono text-[10px] font-bold tracking-[0.3em] text-bioCyan">KM</div>
             <div>
               <p class="text-[10px] font-semibold tracking-[0.26em] text-white/55">MENU</p>
               <p class="font-display text-sm font-semibold tracking-tight text-white/90">KABIR_MAHMUD</p>
@@ -143,31 +140,15 @@
             <a aria-current="page" href="/" class="block rounded-2xl border border-bioCyan/30 bg-bioCyan/10 px-4 py-3 text-bioCyan">HOME</a>
             <a href="/projects" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">DATA_REPOSITORIES</a>
             <a href="/about" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">CORE_DIRECTIVES</a>
+            <a href="/social" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">SOCIAL</a>
             <a href="/resume" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">RESUME</a>
             <a href="/contact" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">NEURAL_LINK</a>
           </nav>
 
-          <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md">
-            <p class="text-[10px] font-semibold tracking-[0.28em] text-white/55">PROFILE_PHOTO</p>
-            <div class="mt-4 flex items-center gap-2">
-              <label class="cursor-pointer rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/75 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">
-                UPLOAD
-                <input data-profile-photo-input type="file" accept="image/*" class="sr-only" />
-              </label>
-              <button
-                type="button"
-                class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/55 hover:border-toxic/40 hover:text-toxic transition-colors"
-                data-profile-photo-clear
-              >
-                CLEAR
-              </button>
-            </div>
-            <p class="mt-3 text-xs text-white/55">Saved on this device.</p>
-          </div>
-
-          <div class="mt-6 grid grid-cols-2 gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
-            <a href="#" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
-            <a href="#" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+          <div class="mt-6 grid grid-cols-3 gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+            <a href="/social" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-toxic/40 hover:text-toxic transition-colors">SOCIAL</a>
           </div>
         </div>
 
@@ -183,6 +164,19 @@
     <main id="content" class="mx-auto min-h-screen max-w-6xl px-4 pb-16 pt-28 sm:px-6">
       <section class="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
         <div class="lg:col-span-7">
+          <div class="sm:hidden">
+            <div class="flex items-center gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 terminal-glow">
+              <div class="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                <img src="/profile.jpeg" alt="Kabir Mahmud profile photo" class="h-full w-full object-cover" decoding="async" loading="lazy" />
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold tracking-[0.28em] text-white/55">IDENTITY_MODULE</p>
+                <p class="mt-1 font-display text-base font-semibold text-white/90">Kabir Mahmud</p>
+                <p class="mt-1 text-xs text-white/60">Full Stack Developer</p>
+              </div>
+            </div>
+          </div>
+
           <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-semibold tracking-[0.26em] text-white/70 terminal-glow">
             <span class="h-2 w-2 animate-pulse rounded-full bg-toxic"></span>
             SYSTEM_STATUS: STABLE // SIGNAL: CLEAN
@@ -190,7 +184,7 @@
 
           <h1 class="mt-7 font-display text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
             Kabir Mahmud
-            <span class="block text-bioCyan">Full Stack Developer & Creative Technologist</span>
+            <span class="block title-gradient">Full Stack Developer & Creative Technologist</span>
           </h1>
 
           <p class="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
@@ -231,7 +225,7 @@
             <div class="absolute -right-24 -top-20 h-72 w-72 rounded-full bg-uv/30 blur-3xl"></div>
             <div class="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-bioCyan/20 blur-3xl"></div>
 
-            <div class="flex items-center justify-between gap-4">
+            <div class="hidden items-center justify-between gap-4 sm:flex">
               <div class="flex items-center gap-4">
                 <div class="relative h-12 w-12 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                   <img data-profile-photo-img alt="Kabir Mahmud profile photo" class="h-full w-full object-cover" decoding="async" loading="lazy" />
@@ -242,19 +236,13 @@
                   <p class="mt-1 text-sm font-semibold text-white/90">Profile Photo</p>
                 </div>
               </div>
-              <div class="flex items-center gap-2">
-                <label class="cursor-pointer rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/75 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">
-                  UPLOAD
-                  <input data-profile-photo-input type="file" accept="image/*" class="sr-only" />
-                </label>
-                <button data-profile-photo-clear type="button" class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/55 hover:border-toxic/40 hover:text-toxic transition-colors">
-                  CLEAR
-                </button>
+              <div class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/60">
+                SERVER_HOSTED
               </div>
             </div>
 
             <p class="text-[10px] font-semibold tracking-[0.28em] text-white/55">LIVE_CONSOLE</p>
-            <div class="mt-4 space-y-2 font-mono text-xs leading-relaxed text-white/70">
+            <div class="mt-4 max-h-44 overflow-y-auto rounded-2xl border border-white/10 bg-black/25 p-4 font-mono text-xs leading-relaxed text-white/75" data-terminal-autotype>
               <p><span class="text-toxic">›</span> ping kabir@voidnet.local <span class="text-white/40"># handshake request</span></p>
               <p><span class="text-toxic">›</span> trace-route --secure api-gateway <span class="text-white/40"># path integrity</span></p>
               <p><span class="text-toxic">›</span> deploy --atomic --region=global <span class="text-white/40"># zero-downtime</span></p>
@@ -301,9 +289,66 @@
           </article>
         </div>
       </section>
+
+      <section class="mt-16 border-t border-white/10 pt-12">
+        <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <h2 class="font-display text-2xl font-semibold tracking-tight text-white">Mission Log</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">
+              A few recent signals: what I build, how I think, and the kinds of systems I like to ship into the real world.
+            </p>
+          </div>
+          <a href="/social" class="text-xs font-semibold tracking-[0.24em] text-white/70 hover:text-toxic transition-colors">OPEN: SOCIAL_CHANNELS â†—</a>
+        </div>
+
+        <div class="mt-7 grid gap-4 md:grid-cols-2">
+          <article class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 terminal-glow">
+            <div class="absolute -right-28 -top-24 h-72 w-72 rounded-full bg-bioCyan/15 blur-3xl"></div>
+            <p class="text-[10px] font-semibold tracking-[0.28em] text-bioCyan">LOG_001</p>
+            <h3 class="mt-3 text-base font-semibold text-white/90">UI That Feels Like Hardware</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/65">Glass + gradients + scanlines, with motion that reads like a device, not a website.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">GLASSMORPH</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">TYPOGRAPHY</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">MOTION</span>
+            </div>
+          </article>
+
+          <article class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 terminal-glow">
+            <div class="absolute -left-28 -bottom-24 h-72 w-72 rounded-full bg-uv/15 blur-3xl"></div>
+            <p class="text-[10px] font-semibold tracking-[0.28em] text-toxic">LOG_002</p>
+            <h3 class="mt-3 text-base font-semibold text-white/90">Resilient Backend Surfaces</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/65">Auth discipline, rate limits, clean logs, and deployments that are boring in production.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">SECURITY</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">OBSERVABILITY</span>
+              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-white/70">CI/CD</span>
+            </div>
+          </article>
+
+          <article class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <p class="text-[10px] font-semibold tracking-[0.28em] text-uv">LOG_003</p>
+            <h3 class="mt-3 text-base font-semibold text-white/90">Three.js: Astronomical Backdrops</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/65">CDN-only Three.js starfield layers under UI for subtle depth and presence.</p>
+            <a href="/projects" class="mt-5 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.24em] text-white/65 hover:text-bioCyan transition-colors">
+              VIEW: DATA_REPOSITORIES <span class="text-bioCyan/70">â†—</span>
+            </a>
+          </article>
+
+          <article class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <p class="text-[10px] font-semibold tracking-[0.28em] text-white/55">LOG_004</p>
+            <h3 class="mt-3 text-base font-semibold text-white/90">Signal-Ready Collaboration</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/65">Send constraints and logs. I respond with steps, timelines, and clear execution.</p>
+            <a href="/contact" class="mt-5 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.24em] text-white/65 hover:text-toxic transition-colors">
+              INITIATE: NEURAL_LINK <span class="text-toxic/70">â†—</span>
+            </a>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer class="border-t border-white/10 bg-white/5">
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-bioCyan/40 to-transparent"></div>
       <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
@@ -311,14 +356,16 @@
             <p class="mt-2 text-sm text-white/65">If your system needs an upgrade, transmit coordinates. I’ll respond with a plan.</p>
           </div>
           <div class="flex flex-wrap gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
-            <a href="#" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
-            <a href="#" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
-            <a href="/contact" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-toxic/40 hover:text-toxic transition-colors">CONTACT</a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+            <a href="/social" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-toxic/40 hover:text-toxic transition-colors">SOCIAL</a>
+            <a href="/contact" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-uv/40 hover:text-uv transition-colors">CONTACT</a>
           </div>
         </div>
       </div>
     </footer>
 
+    <script type="module" src="/starfield.js"></script>
     <script type="module" src="/src/site.js"></script>
   </body>
 </html>

@@ -52,6 +52,7 @@
   </head>
   <body class="antialiased">
     <div class="grid-overlay"></div>
+    <div class="grain-overlay"></div>
     <div class="crt-overlay"></div>
     <div class="scanline-overlay"></div>
 
@@ -63,7 +64,7 @@
       <nav class="frost-nav terminal-glow border-b border-white/10">
         <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 md:grid md:grid-cols-3 md:items-center">
           <a href="/" class="group inline-flex items-center gap-3 md:justify-self-start">
-            <span class="relative grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5">
+            <span class="relative hidden h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 sm:grid">
               <span class="absolute -inset-2 rounded-2xl bg-bioCyan/10 blur-xl opacity-0 transition-opacity group-hover:opacity-100"></span>
               <span class="absolute inset-0 overflow-hidden rounded-xl">
                 <img data-profile-photo-img alt="" class="h-full w-full object-cover" decoding="async" loading="lazy" />
@@ -74,11 +75,12 @@
           </a>
 
           <div class="hidden md:col-start-2 md:flex items-center justify-center gap-7 text-[11px] font-semibold tracking-[0.22em] text-white/60 md:justify-self-center">
-            <a href="/" class="hover:text-bioCyan transition-colors">HOME</a>
-            <a href="/projects" class="hover:text-bioCyan transition-colors">DATA_REPOSITORIES</a>
-            <a aria-current="page" href="/about" class="text-bioCyan">CORE_DIRECTIVES</a>
-            <a href="/resume" class="hover:text-bioCyan transition-colors">RESUME</a>
-            <a href="/contact" class="hover:text-bioCyan transition-colors">NEURAL_LINK</a>
+            <a href="/" class="nav-link">HOME</a>
+            <a href="/projects" class="nav-link">DATA_REPOSITORIES</a>
+            <a aria-current="page" href="/about" class="nav-link">CORE_DIRECTIVES</a>
+            <a href="/social" class="nav-link">SOCIAL</a>
+            <a href="/resume" class="nav-link">RESUME</a>
+            <a href="/contact" class="nav-link">NEURAL_LINK</a>
           </div>
 
           <div class="flex items-center justify-end gap-2 md:col-start-3 md:justify-self-end">
@@ -117,12 +119,7 @@
       <div class="relative flex h-full flex-col">
         <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <div class="flex items-center gap-3">
-            <div class="relative h-10 w-10 rounded-xl border border-white/10 bg-white/5">
-              <div class="absolute inset-0 overflow-hidden rounded-xl">
-                <img data-profile-photo-img alt="" class="h-full w-full object-cover" decoding="async" loading="lazy" />
-                <div class="absolute inset-0 grid place-items-center font-mono text-[10px] font-bold tracking-[0.3em] text-bioCyan" data-profile-photo-fallback>KM</div>
-              </div>
-            </div>
+            <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 font-mono text-[10px] font-bold tracking-[0.3em] text-bioCyan">KM</div>
             <div>
               <p class="text-[10px] font-semibold tracking-[0.26em] text-white/55">MENU</p>
               <p class="font-display text-sm font-semibold tracking-tight text-white/90">KABIR_MAHMUD</p>
@@ -145,31 +142,15 @@
             <a href="/" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">HOME</a>
             <a href="/projects" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">DATA_REPOSITORIES</a>
             <a aria-current="page" href="/about" class="block rounded-2xl border border-bioCyan/30 bg-bioCyan/10 px-4 py-3 text-bioCyan">CORE_DIRECTIVES</a>
+            <a href="/social" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">SOCIAL</a>
             <a href="/resume" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">RESUME</a>
             <a href="/contact" class="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">NEURAL_LINK</a>
           </nav>
 
-          <div class="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md">
-            <p class="text-[10px] font-semibold tracking-[0.28em] text-white/55">PROFILE_PHOTO</p>
-            <div class="mt-4 flex items-center gap-2">
-              <label class="cursor-pointer rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/75 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">
-                UPLOAD
-                <input data-profile-photo-input type="file" accept="image/*" class="sr-only" />
-              </label>
-              <button
-                type="button"
-                class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-semibold tracking-[0.24em] text-white/55 hover:border-toxic/40 hover:text-toxic transition-colors"
-                data-profile-photo-clear
-              >
-                CLEAR
-              </button>
-            </div>
-            <p class="mt-3 text-xs text-white/55">Saved on this device.</p>
-          </div>
-
-          <div class="mt-6 grid grid-cols-2 gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
-            <a href="#" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
-            <a href="#" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+          <div class="mt-6 grid grid-cols-3 gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+            <a href="/social" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-toxic/40 hover:text-toxic transition-colors">SOCIAL</a>
           </div>
         </div>
 
@@ -276,6 +257,7 @@
     </main>
 
     <footer class="border-t border-white/10 bg-white/5">
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-bioCyan/40 to-transparent"></div>
       <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
@@ -283,14 +265,16 @@
             <p class="mt-2 text-sm text-white/65">If your system needs an upgrade, transmit coordinates. I’ll respond with a plan.</p>
           </div>
           <div class="flex flex-wrap gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
-            <a href="#" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
-            <a href="#" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
-            <a href="/contact" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-toxic/40 hover:text-toxic transition-colors">CONTACT</a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
+            <a href="/social" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-toxic/40 hover:text-toxic transition-colors">SOCIAL</a>
+            <a href="/contact" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:border-uv/40 hover:text-uv transition-colors">CONTACT</a>
           </div>
         </div>
       </div>
     </footer>
 
+    <script type="module" src="/starfield.js"></script>
     <script type="module" src="/src/site.js"></script>
   </body>
 </html>

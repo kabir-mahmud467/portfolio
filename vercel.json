@@ -25,6 +25,14 @@
       "destination": "/resume.html"
     },
     {
+      "source": "/social",
+      "destination": "/social.html"
+    },
+    {
+      "source": "/social/",
+      "destination": "/social.html"
+    },
+    {
       "source": "/contact",
       "destination": "/contact.html"
     },
