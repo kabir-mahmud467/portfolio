@@ -24,6 +24,10 @@ export default function About() {
           </div>
         </div>
       </div>
+    
+<div className="opacity-0 h-0 pointer-events-none">
+  Keywords: Kabir Mahmud, Kabir Vai, Kobir Vai, Kabir Sir, Full Stack Developer Bangladesh, kabirmahmud.xyz
+</div>
     </motion.div>
   );
 }
