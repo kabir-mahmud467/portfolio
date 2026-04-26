@@ -1,48 +1,181 @@
 @import "tailwindcss";
 
-
 :root {
-  --neon-green: #00ff41;
-  --terminal-bg: #050505;
-}
-/* ... the rest of your CSS ... */
+  --c-void: #05030a;
+  --c-void-2: #07061a;
+  --c-uv: #7c3aed;
+  --c-uv-2: #4c1d95;
+  --c-bio-cyan: #2dfcff;
+  --c-toxic: #b6ff00;
+  --c-ink: #0b1020;
+  --c-glass: rgba(8, 10, 24, 0.72);
 
-:root {
-  --neon-green: #00ff41;
-  --terminal-bg: #050505;
-}
-
-body {
-  background-color: var(--terminal-bg);
-  color: var(--neon-green);
-  font-family: 'Courier New', Courier, monospace;
-  overflow: hidden; /* Terminal feel */
+  --glow-cyan: 45, 252, 255;
+  --glow-toxic: 182, 255, 0;
+  --glow-uv: 124, 58, 237;
 }
 
-/* CRT Scanline Effect */
-.scanline {
-  width: 100%;
-  height: 2px;
-  z-index: 50;
-  background: rgba(0, 255, 65, 0.1);
-  opacity: 0.75;
-  position: absolute;
-  bottom: 100%;
-  animation: scanline 6s linear infinite;
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(900px 600px at 12% 18%, rgba(var(--glow-uv), 0.22), transparent 60%),
+      radial-gradient(900px 600px at 86% 22%, rgba(var(--glow-cyan), 0.16), transparent 55%),
+      radial-gradient(900px 600px at 60% 88%, rgba(var(--glow-toxic), 0.10), transparent 55%),
+      linear-gradient(180deg, var(--c-void), var(--c-void-2));
+    color: rgba(255, 255, 255, 0.92);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    overflow-x: hidden;
+  }
 }
 
-@keyframes scanline {
-  0% { bottom: 100%; }
-  100% { bottom: 0%; }
-}
-
-.crt-overlay {
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  background-size: 100% 2px, 3px 100%;
+/* Complex CRT scanline overlay */
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  z-index: 40;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0) 6px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
+
+/* Subtle RGB split + vignette */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.03), rgba(0, 0, 255, 0.05));
+  mix-blend-mode: screen;
+  opacity: 0.22;
+}
+
+/* Wired grid overlay */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background-image:
+    linear-gradient(rgba(45, 252, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(182, 255, 0, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 78%);
+  opacity: 0.35;
+}
+
+.bg-sparkles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0.65;
+}
+
+.terminal-glow {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 28px rgba(var(--glow-cyan), 0.14),
+    0 0 46px rgba(var(--glow-uv), 0.10);
+}
+
+.frost-nav {
+  background: var(--c-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .glitch-hover:hover {
-  text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+  text-shadow: 2px 0 rgba(var(--glow-uv), 0.85), -2px 0 rgba(var(--glow-cyan), 0.85);
+}
+
+.menu-toggle {
+  background: rgba(8, 10, 24, 0.62);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.tw-caret::after {
+  content: "▍";
+  margin-left: 0.25rem;
+  opacity: 0.7;
+  color: rgba(var(--glow-cyan), 0.9);
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.mobile-menu-overlay,
+.mobile-menu-panel {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu-overlay {
+  background: rgba(5, 3, 10, 0.58);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: opacity 180ms ease;
+}
+
+.mobile-menu-panel {
+  position: fixed;
+  isolation: isolate;
+  transform: translate3d(110%, 0, 0);
+  transition: transform 220ms ease, opacity 180ms ease;
+  background: linear-gradient(180deg, rgba(8, 10, 24, 0.92), rgba(5, 3, 10, 0.94));
+}
+
+.mobile-menu-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(480px 420px at 20% 10%, rgba(var(--glow-cyan), 0.14), transparent 60%),
+    radial-gradient(420px 360px at 80% 20%, rgba(var(--glow-uv), 0.12), transparent 60%);
+  opacity: 0.9;
+}
+
+html.is-menu-open .mobile-menu-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+html.is-menu-open .mobile-menu-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Fallback: if JS fails to toggle the <html> class, still show via aria-expanded */
+[data-mobile-menu-button][aria-expanded="true"] ~ .mobile-menu-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+[data-mobile-menu-button][aria-expanded="true"] ~ .mobile-menu-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
 }
