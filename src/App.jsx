@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TermIcon, ArrowRight } from 'lucide-react';
 
