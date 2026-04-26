@@ -1,0 +1,10 @@
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Block specific tech folders if they exist (Vite/Vercel defaults)
+Disallow: /_next/
+Disallow: /static/
+
+# Link to your sitemap so Google finds it immediately
+Sitemap: https://www.kabirmahmud.xyz/sitemap.xml
