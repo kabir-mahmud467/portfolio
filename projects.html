@@ -63,7 +63,7 @@
       <nav class="frost-nav terminal-glow border-b border-white/10">
         <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 md:grid md:grid-cols-3 md:items-center">
           <a href="/" class="group inline-flex items-center gap-3 md:justify-self-start">
-            <span class="relative hidden h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 sm:grid">
+            <span class="relative grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 lg:h-11 lg:w-11">
               <span class="absolute -inset-2 rounded-2xl bg-bioCyan/10 blur-xl opacity-0 transition-opacity group-hover:opacity-100"></span>
               <span class="absolute inset-0 overflow-hidden rounded-xl">
                 <img data-profile-photo-img alt="" class="h-full w-full object-cover" decoding="async" loading="lazy" />
@@ -147,9 +147,18 @@
           </nav>
 
           <div class="mt-6 grid grid-cols-3 gap-3 text-xs font-semibold tracking-[0.18em] text-white/70">
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">GITHUB</a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">LINKEDIN</a>
-            <a href="/social" class="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-toxic/40 hover:text-toxic transition-colors">SOCIAL</a>
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">
+              <svg class="h-4 w-4" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>
+              GITHUB
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-bioCyan/40 hover:text-bioCyan transition-colors">
+              <svg class="h-4 w-4" aria-hidden="true"><use href="/icons.svg#linkedin-icon"></use></svg>
+              LINKEDIN
+            </a>
+            <a href="/social" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-center hover:border-toxic/40 hover:text-toxic transition-colors">
+              <svg class="h-4 w-4" aria-hidden="true"><use href="/icons.svg#share-icon"></use></svg>
+              SOCIAL
+            </a>
           </div>
         </div>
 
@@ -285,6 +294,40 @@
         </div>
       </div>
     </footer>
+
+    <div class="md:hidden">
+      <button
+        type="button"
+        aria-expanded="false"
+        data-mobile-terminal-button
+        class="fixed bottom-5 right-4 z-[74] inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-3 text-[11px] font-semibold tracking-[0.22em] text-white/80 terminal-glow"
+      >
+        <span class="icon-chip h-9 w-9 text-bioCyan/90">
+          <svg aria-hidden="true"><use href="/icons.svg#terminal-icon"></use></svg>
+        </span>
+        TERMINAL
+      </button>
+
+      <div class="mobile-terminal-overlay" data-mobile-terminal-overlay></div>
+
+      <div class="mobile-terminal-panel" data-mobile-terminal-panel>
+        <div class="relative mx-auto max-w-6xl px-4 pb-6 pt-4">
+          <div class="flex items-center justify-between gap-3">
+            <p class="font-mono text-[10px] font-semibold tracking-[0.3em] text-white/55">MOBILE_TERMINAL</p>
+            <button
+              type="button"
+              data-mobile-terminal-close
+              class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-semibold tracking-[0.22em] text-white/80 hover:border-bioCyan/40 hover:text-bioCyan transition-colors"
+            >
+              CLOSE
+            </button>
+          </div>
+          <div class="mt-4 terminal-surface terminal-glow p-4">
+            <div class="max-h-[50vh] overflow-y-auto font-mono text-xs leading-relaxed text-white/75" data-terminal-autotype data-terminal-speed="16"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="/starfield.js"></script>
     <script type="module" src="/src/site.js"></script>

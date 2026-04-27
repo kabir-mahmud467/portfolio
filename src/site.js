@@ -464,11 +464,75 @@ function initMobileMenuDrawer() {
   window.addEventListener('hashchange', close, { passive: true });
 }
 
+function initMobileTerminalDrawer() {
+  const button = document.querySelector('[data-mobile-terminal-button]');
+  const overlay = document.querySelector('[data-mobile-terminal-overlay]');
+  const panel = document.querySelector('[data-mobile-terminal-panel]');
+  if (!button || !overlay || !panel) return;
+
+  const closeBtn = panel.querySelector('[data-mobile-terminal-close]');
+  const focusTarget = panel.querySelector('button,[tabindex]:not([tabindex="-1"]),a');
+
+  const unlockMenuIfOpen = () => {
+    if (!document.documentElement.classList.contains('is-menu-open')) return;
+    document.documentElement.classList.remove('is-menu-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+
+    const menuBtn = document.querySelector('[data-mobile-menu-button]');
+    menuBtn?.setAttribute?.('aria-expanded', 'false');
+  };
+
+  const lockScroll = () => {
+    document.documentElement.classList.add('is-terminal-open');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+  };
+
+  const unlockScroll = () => {
+    document.documentElement.classList.remove('is-terminal-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+  };
+
+  const isOpen = () => document.documentElement.classList.contains('is-terminal-open');
+
+  const open = () => {
+    if (isOpen()) return;
+    unlockMenuIfOpen();
+    button.setAttribute('aria-expanded', 'true');
+    lockScroll();
+    window.setTimeout(() => focusTarget?.focus?.(), 10);
+  };
+
+  const close = () => {
+    if (!isOpen()) return;
+    button.setAttribute('aria-expanded', 'false');
+    unlockScroll();
+    button.focus?.();
+  };
+
+  const toggle = () => (isOpen() ? close() : open());
+
+  button.addEventListener('click', toggle);
+  overlay.addEventListener('click', close);
+  closeBtn?.addEventListener('click', close);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    close();
+  });
+}
+
 function init() {
   initSparkles();
   initTypewriters();
   initTerminalAutotypes();
   initMobileMenuDrawer();
+  initMobileTerminalDrawer();
   initProfilePhotoModule();
 }
 
