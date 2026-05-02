@@ -139,6 +139,8 @@ export default function App() {
           {/* Add more routes as needed */}
         </Route>
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </Router>
   );
 }
